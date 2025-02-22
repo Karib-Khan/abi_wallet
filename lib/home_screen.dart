@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
-
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -60,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   bool _isMenuOpen = false;
-  int _selectedIndex = 0;
+  int _selectedIndex = 0; // Track the selected bottom nav item
 
   void _toggleMenu() {
     setState(() {
@@ -72,6 +71,36 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Widget _buildBottomNavItem(String title, IconData icon, int index) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _onBottomNavTap(index),
+        child: Container(
+          color: _selectedIndex == index ? Colors.green : Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: _selectedIndex == index ? Colors.white : Colors.black,
+                size: 24,
+              ),
+              SizedBox(height: 5),
+              Text(
+                title,
+                style: TextStyle(
+                  color: _selectedIndex == index ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -102,7 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 10),
-
 
                 // Categories Section
                 Padding(
@@ -217,14 +245,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-            )
-          ,
+            ),
+
+          // Bottom Navigation Bar (added here)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildBottomNavItem('Home', Icons.home, 0),
+                  _buildBottomNavItem('All Projects', Icons.list, 1),
+                  _buildBottomNavItem('My Projects', Icons.folder, 2),
+                  _buildBottomNavItem('Account', Icons.person, 3),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
-
-
 
   Widget _buildCategoryButton(String title, IconData icon) {
     return Expanded(
@@ -241,7 +284,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 
   Widget _buildNewsItem(int index) {
     return Padding(
