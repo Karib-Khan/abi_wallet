@@ -21,6 +21,4 @@ flutter:
 
 
   assets:
-    - lib/assets/imgs/splash_screen.png
-    - lib/assets/imgs/logo2.png
-    - lib/assets/imgs/logo3.png
+    - lib/assets/imgs/
