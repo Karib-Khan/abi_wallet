@@ -203,8 +203,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 _buildSettingsItem(
                   icon: Icons.lock,
                   title: 'Change Password',
-                    iconColor: Colors.deepOrange, // Red icon for logout
-                    textColor: Colors.deepOrange,
+                    iconColor: Colors.orangeAccent, // Red icon for logout
+                    textColor: Colors.orangeAccent,
                   onTap: () {
                     // Add navigation or action for changing password
                     ScaffoldMessenger.of(context).showSnackBar(
