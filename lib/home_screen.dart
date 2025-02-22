@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'base_scaffold.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -58,222 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  bool _isMenuOpen = false;
-  int _selectedIndex = 0; // Track the selected bottom nav item
-
-  void _toggleMenu() {
-    setState(() {
-      _isMenuOpen = !_isMenuOpen;
-    });
-  }
-
-  void _onBottomNavTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  Widget _buildBottomNavItem(String title, IconData icon, int index) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () => _onBottomNavTap(index),
-        child: Container(
-          color: _selectedIndex == index ? Colors.green : Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                color: _selectedIndex == index ? Colors.white : Colors.black,
-                size: 24,
-              ),
-              SizedBox(height: 5),
-              Text(
-                title,
-                style: TextStyle(
-                  color: _selectedIndex == index ? Colors.white : Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(_isMenuOpen ? Icons.close : Icons.menu, color: Colors.black),
-          onPressed: _toggleMenu,
-        ),
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Top Image Section
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/assets/imgs/top_image2.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-
-                // Categories Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Categories',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildCategoryButton('Short', Icons.flash_on),
-                          _buildCategoryButton('Long', Icons.timeline),
-                          _buildCategoryButton('Shariah', Icons.verified_user),
-                          _buildCategoryButton('News', Icons.article),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                SizedBox(height: 60),
-                // Latest Projects Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    'Latest Projects',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 6,
-                    itemBuilder: (context, index) {
-                      return _buildProjectCard();
-                    },
-                  ),
-                ),
-                SizedBox(height: 20),
-
-                // News Section
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    'News',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return _buildNewsItem(index);
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          // Sidebar Menu
-          if (_isMenuOpen)
-            GestureDetector(
-              onTap: _toggleMenu,
-              child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    width: 250,
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text('About Us'),
-                          leading: Icon(Icons.info_outline),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          title: Text('Blog'),
-                          leading: Icon(Icons.book),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          title: Text('News'),
-                          leading: Icon(Icons.article),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          title: Text('FAQ'),
-                          leading: Icon(Icons.help_outline),
-                          onTap: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-          // Bottom Navigation Bar (added here)
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildBottomNavItem('Home', Icons.home, 0),
-                  _buildBottomNavItem('All Projects', Icons.list, 1),
-                  _buildBottomNavItem('My Projects', Icons.folder, 2),
-                  _buildBottomNavItem('Account', Icons.person, 3),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildCategoryButton(String title, IconData icon) {
     return Expanded(
       child: Column(
         children: [
-          Icon(icon, color: Colors.black, size: 24), // Smaller and black
+          Icon(icon, color: Colors.black, size: 24),
           SizedBox(height: 5),
           Text(
             title,
@@ -330,6 +120,103 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseScaffold(
+      initialIndex: 0,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Top Image Section
+            Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/assets/imgs/top_image2.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+
+            // Categories Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Categories',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildCategoryButton('Short', Icons.flash_on),
+                      _buildCategoryButton('Long', Icons.timeline),
+                      _buildCategoryButton('Shariah', Icons.verified_user),
+                      _buildCategoryButton('News', Icons.article),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 60),
+            // Latest Projects Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'Latest Projects',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Container(
+              height: 200,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  return _buildProjectCard();
+                },
+              ),
+            ),
+            SizedBox(height: 20),
+
+            // News Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                'News',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return _buildNewsItem(index);
+              },
+            ),
+          ],
+        ),
+      ), // HomeScreen corresponds to index 0
     );
   }
 }
