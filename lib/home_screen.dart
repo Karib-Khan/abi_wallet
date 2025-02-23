@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'base_scaffold.dart';
+import 'single_project_screen.dart'; // Import the SingleProjectScreen
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -7,54 +8,95 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Widget _buildProjectCard() {
-    return Container(
-      width: 150,
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('lib/assets/imgs/project.png'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
-              ),
+  Widget _buildProjectCardWithStatus(String projectName, String status) {
+    // Determine status color based on status
+    Color statusColor = Colors.green; // Default to green for "Active"
+    if (status == 'Completed') {
+      statusColor = Colors.grey;
+    } else if (status == 'Pending') {
+      statusColor = Colors.orange;
+    }
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SingleProjectScreen(
+              projectName: projectName,
+              minInvestment: '\$100', // Sample data; adjust as needed
+              totalRevenue: '\$300', // Sample data; adjust as needed
+              duration: '3 months', // Sample data; adjust as needed
+              description: 'This is a brief description of $projectName.', // Sample data; adjust as needed
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Project Title',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+        );
+      },
+      child: Container(
+        width: 150,
+        margin: EdgeInsets.only(right: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('lib/assets/imgs/project.png'),
+                  fit: BoxFit.cover,
                 ),
-                SizedBox(height: 5),
-                Text('Min. Investment: \$100'),
-              ],
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10),
+                ),
+              ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    projectName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    decoration: BoxDecoration(
+                      color: statusColor.withOpacity(0.1), // Light background for status
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(color: statusColor, width: 1.0),
+                    ),
+                    child: Text(
+                      status,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: statusColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text('Min. Investment: \$100'),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -126,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      initialIndex: 0,
+      initialIndex: 0, // HomeScreen corresponds to index 0
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,12 +226,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 10),
             Container(
-              height: 200,
+              height: 220, // Increased height to accommodate status
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: 6,
                 itemBuilder: (context, index) {
-                  return _buildProjectCard();
+                  // Sample status for each project (e.g., Active, Completed, Pending)
+                  List<String> statuses = ['Active', 'Completed', 'Pending', 'Active', 'Pending', 'Completed'];
+                  return _buildProjectCardWithStatus(
+                    'Project ${index + 1}',
+                    statuses[index], // Assign status based on index
+                  );
                 },
               ),
             ),
@@ -216,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-      ), // HomeScreen corresponds to index 0
+      ),
     );
   }
 }
