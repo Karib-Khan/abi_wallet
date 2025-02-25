@@ -1,3 +1,5 @@
+import 'package:abi_wallet/aboutus_Screen.dart';
+import 'package:abi_wallet/faq_acreen.dart';
 import 'package:flutter/material.dart';
 
 // Import your screen files
@@ -5,7 +7,9 @@ import 'home_screen.dart';
 import 'all_projects.dart';
 import 'my_projects.dart';
 import 'account.dart';
-import 'single_project_screen.dart'; // Add this if not already imported
+import 'single_project_screen.dart';
+import 'shariah_knowledge_screen.dart'; // New screen
+import 'news_screen.dart'; // New screen
 
 class BaseScaffold extends StatefulWidget {
   final Widget child; // The content/body of the specific screen
@@ -54,7 +58,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
       case 2:
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MyProjectsScreen()),
+          MaterialPageRoute(builder: (context) => MyProjects()),
         );
         break;
       case 3:
@@ -124,24 +128,44 @@ class _BaseScaffoldState extends State<BaseScaffold> {
                     child: Column(
                       children: [
                         ListTile(
-                          title: Text('About Us'),
-                          leading: Icon(Icons.info_outline),
-                          onTap: () {},
-                        ),
-                        ListTile(
-                          title: Text('Blog'),
-                          leading: Icon(Icons.book),
-                          onTap: () {},
-                        ),
-                        ListTile(
                           title: Text('News'),
                           leading: Icon(Icons.article),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => NewsScreen()),
+                            );
+                          },
                         ),
                         ListTile(
                           title: Text('FAQ'),
                           leading: Icon(Icons.help_outline),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => FAQScreen()),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('Shariah Knowledge'),
+                          leading: Icon(Icons.bookmark),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => ShariahKnowledgeScreen()),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: Text('About Us'),
+                          leading: Icon(Icons.info_outline),
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                            );
+                          },
                         ),
                       ],
                     ),

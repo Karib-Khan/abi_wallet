@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'base_scaffold.dart';
 import 'single_project_screen.dart'; // Import the SingleProjectScreen
+import 'all_projects.dart'; // Import for Short and Long navigation
+import 'shariah_knowledge_screen.dart'; // Import for Shariah navigation
+import 'news_screen.dart'; // Import for News navigation
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -103,16 +106,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoryButton(String title, IconData icon) {
     return Expanded(
-      child: Column(
-        children: [
-          Icon(icon, color: Colors.black, size: 24),
-          SizedBox(height: 5),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ],
+      child: GestureDetector(
+        onTap: () {
+          if (title == 'Short' || title == 'Long') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AllProjectsScreen()),
+            );
+          } else if (title == 'Shariah') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ShariahKnowledgeScreen()),
+            );
+          } else if (title == 'News') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NewsScreen()),
+            );
+          }
+        },
+        child: Column(
+          children: [
+            Icon(icon, color: Colors.black, size: 24),
+            SizedBox(height: 5),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
       ),
     );
   }
