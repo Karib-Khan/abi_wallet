@@ -216,15 +216,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 _buildSettingsItem(
                   icon: Icons.logout,
                   title: 'Logout',
-                  iconColor: Colors.red, // Red icon for logout
-                  textColor: Colors.red, // Red text for logout
+                  iconColor: Colors.red,
+                  textColor: Colors.red,
                   onTap: () {
-                    // Add logout logic here (e.g., clear user data, navigate to login screen)
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Logged out')),
-                    );
+                    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                   },
                 ),
+
               ],
             ),
             SizedBox(height: 100.0), // Add extra space to ensure scrolling reaches the bottom

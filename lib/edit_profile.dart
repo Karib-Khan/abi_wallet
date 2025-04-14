@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class EditProfileScreen extends StatefulWidget {
   final String userName;
@@ -48,6 +50,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController _accountNumberController;
   String _gender = 'Male'; // Default gender
   File? _profileImage; // Store the selected or captured image
+
+
 
   @override
   void initState() {
