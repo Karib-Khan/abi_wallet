@@ -1,12 +1,66 @@
 import 'package:flutter/material.dart';
 import 'router.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  // String email="", password="", fullname="";
+  // TextEditingController emailcontroller= new TextEditingController();
+  // TextEditingController passcontroller= new TextEditingController();
+  // TextEditingController namecontroller= new TextEditingController();
+
+  registration() async {
+    String fullName = _fullNameController.text.trim();
+    String email = _emailController.text.trim();
+    String password = _passwordController.text.trim();
+
+    if (fullName.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please fill all fields')),
+      );
+      return;
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      // Optional: Update display name
+      await userCredential.user!.updateDisplayName(fullName);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration successful')),
+      );
+
+      // Navigate to home or login page
+      Navigator.pushReplacementNamed(context, '/login');
+
+    } on FirebaseAuthException catch (e) {
+      String message = '';
+
+      if (e.code == 'email-already-in-use') {
+        message = 'Email already in use';
+      } else if (e.code == 'weak-password') {
+        message = 'Password should be at least 6 characters';
+      } else {
+        message = 'Something went wrong';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('An error occurred')),
+      );
+    }
+  }
+
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -107,9 +161,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                 // Create Account Button
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed:registration
                     // Add register functionality
-                  },
+                  ,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green, // Green background
                     padding: EdgeInsets.symmetric(vertical: 15),

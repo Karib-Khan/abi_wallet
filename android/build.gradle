@@ -1,3 +1,19 @@
+buildscript {
+    ext.kotlin_version = '2.1.0' // ✅ Add this line to match Firebase libs
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // ✅ Needed for Kotlin compatibility
+        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.android.tools.build:gradle:8.2.2' // ✅ More compatible with Kotlin 2.1.0
+
+    }
+}
+
 allprojects {
     repositories {
         google()

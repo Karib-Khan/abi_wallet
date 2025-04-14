@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597678862111",
+    "project_id": "abi-wallet-fda49",
+    "storage_bucket": "abi-wallet-fda49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597678862111:android:a93c1111e125f7aecc0a2a",
+        "android_client_info": {
+          "package_name": "com.example.abi_wallet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjJC94K8ZrEznRCWOLOiht_3ECVl11MiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
